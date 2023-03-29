@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>form validation</title>
+    <style>
+        .box{
+            text-align: center;
+            margin-top: 10%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+    <form name="form1" method="post" onsubmit="return valid()">
+        UserName: <input type="text" name="name" id="">
+        <br>
+        Password: <input type="password" name="pass" id="">
+        <br>
+        Confrim Password: <input type="password" name="cpass" id="">
+        <br>
+        Gender:
+        <br>
+        <input type="radio" name="gender" id="rb">M</input>
+        <input type="radio" name="gender" id="rb">F</input>
+        <input type="radio" name="gender" id="rb">O</input>
+        <br>
+        Branch:
+        <br>
+        <input type="checkbox" name="branch" id="cb">DS</input>
+        <input type="checkbox" name="branch" id="cb">ML</input>
+        <br>
+        phone:<input type="tel" name="phone" id="">
+        <br>
+        Address 
+        <br>
+        <textarea name="address" id="" cols="20" rows="4"></textarea>
+        <br>
+        State: <input type="text" name="state" id="">
+        <br>
+        <input type="submit" value="submit" id="sub">
+        <p style="color: red;" id="err"></p>
+    </form>
+
+    <script>
+        function valid() {
+            const err = document.getElementById('err');
+            var status=1;
+
+            //username valid
+            if(document.form1.name.value==""){
+                err.innerText="Enter username";
+                document.form1.name.focus();
+                return false;
+            }
+            if(document.form1.name.value.length < 4 || document.form1.name.value.length >10){
+                err.innerText = "Username must be 4 to 10";
+                return false;
+            }
+
+            //pass valid
+            if(document.form1.pass.value ==""){
+                document.form1.pass.focus();
+                err.innerText = "enter password";
+                return false;
+            }
+            if(document.form1.cpass.value==""){
+                document.form1.cpass.focus();
+                err.innerText = "enter current password";
+                return false;
+            }
+            if(document.form1.pass.value.length < 4 || document.form1.pass.value.length >10){
+                err.innerText = "Password must be 4 to 10";
+                return false;
+            }
+            if(document.form1.pass.value != document.form1.cpass.value){
+                err.innerText = "password and confirm password are not same"
+                return false;
+            }
+
+            //checkbox valid
+            document.querySelectorAll('#rb').forEach((e)=>{
+                if(e.checked)
+                    status=0;
+            })
+            if(status){
+                err.innerText = 'please select a gender';
+                return false;
+            }
+
+            // branch valid
+            status=1;
+            document.querySelectorAll('#cb').forEach((e)=>{
+                if(e.checked)
+                    status=0;
+            })
+            if(status){
+                err.innerText = 'please select a branch';
+                return false;
+            }
+
+            if(document.form1.address.value==""){
+                err.innerText="Enter Address";
+                document.form1.address.focus();
+                return false;
+            }
+            if(document.form1.state.value==""){
+                err.innerText="Enter State";
+                document.form1.state.focus();
+                return false;
+            }
+
+            //phone valid
+            if(document.form1.phone.value.length!=10){
+                err.innerText='enter mobile no correctly';
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+    </div>
+</body>
+
+</html>
